@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5627358086851474608}
   - component: {fileID: 5542201526882034799}
   - component: {fileID: -8860440677653953815}
+  - component: {fileID: -452486283335666282}
   m_Layer: 7
   m_Name: Enemy_straight_projectile
   m_TagString: Untagged
@@ -169,6 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 4974395130122636271}
+  defaultHealthPoint: 3
 --- !u!61 &-8860440677653953815
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -214,3 +216,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.024, y: 1.024}
   m_EdgeRadius: 0
+--- !u!114 &-452486283335666282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4974395130122636271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63bedb4b4edacef4eb6ce2f1a0f4ae62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 5542201526882034799}
+  damage: 1
