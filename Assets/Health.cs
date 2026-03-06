@@ -1,9 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Health : MonoBehaviour
 {
     public GameObject explosionPrefab;
     public int defaultHealthPoint = 3;
+
+    public System.Action onDead;   // ⚠️ QUAN TRỌNG
 
     private int healthPoint;
 
@@ -38,5 +40,7 @@ public class Health : MonoBehaviour
         }
 
         Destroy(gameObject);
+
+        onDead?.Invoke(); // ⚠️ QUAN TRỌNG
     }
 }
