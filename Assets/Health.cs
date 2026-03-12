@@ -5,13 +5,15 @@ public class Health : MonoBehaviour
     public GameObject explosionPrefab;
     public int defaultHealthPoint = 3;
 
-    public System.Action onDead;   // ⚠️ QUAN TRỌNG
+    public System.Action onDead;
+    public System.Action onHealthChanged;   // thêm dòng này
 
-    private int healthPoint;
+    public int healthPoint;
 
     private void Start()
     {
         healthPoint = defaultHealthPoint;
+        onHealthChanged?.Invoke();
     }
 
     public void TakeDamage(int damage)
@@ -19,6 +21,8 @@ public class Health : MonoBehaviour
         if (healthPoint <= 0) return;
 
         healthPoint -= damage;
+
+        onHealthChanged?.Invoke();  // thêm dòng này
 
         if (healthPoint <= 0)
         {
@@ -41,6 +45,6 @@ public class Health : MonoBehaviour
 
         Destroy(gameObject);
 
-        onDead?.Invoke(); // ⚠️ QUAN TRỌNG
+        onDead?.Invoke();
     }
 }
