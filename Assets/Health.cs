@@ -6,23 +6,40 @@ public class Health : MonoBehaviour
     public int defaultHealthPoint = 3;
 
     public System.Action onDead;
-    public System.Action onHealthChanged;   // thêm dòng này
+    public System.Action onHealthChanged;
 
     public int healthPoint;
 
+    private bool canTakeDamage = false;
+
+    protected virtual void Awake()
+    {
+        // reset máu ngay khi spawn
+        healthPoint = defaultHealthPoint;
+    }
+
     private void Start()
     {
-        healthPoint = defaultHealthPoint;
+        // cập nhật thanh máu
         onHealthChanged?.Invoke();
+
+        // tránh bị trúng đạn ngay khi spawn
+        Invoke(nameof(EnableDamage), 0.2f);
+    }
+
+    void EnableDamage()
+    {
+        canTakeDamage = true;
     }
 
     public void TakeDamage(int damage)
     {
+        if (!canTakeDamage) return;
         if (healthPoint <= 0) return;
 
         healthPoint -= damage;
 
-        onHealthChanged?.Invoke();  // thêm dòng này
+        onHealthChanged?.Invoke();
 
         if (healthPoint <= 0)
         {
@@ -43,8 +60,8 @@ public class Health : MonoBehaviour
             Destroy(explosion, 1f);
         }
 
-        Destroy(gameObject);
-
         onDead?.Invoke();
+
+        Destroy(gameObject);
     }
 }

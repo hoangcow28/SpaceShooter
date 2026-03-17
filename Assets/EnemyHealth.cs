@@ -1,17 +1,19 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyHealth : Health
 {
     public static int LivingEnemyCount = 0;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         LivingEnemyCount++;
     }
 
     protected override void Die()
     {
         LivingEnemyCount--;
-        base.Die();
+
+        Destroy(gameObject); // chết là biến mất
     }
 }

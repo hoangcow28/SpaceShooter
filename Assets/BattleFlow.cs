@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class BattleFlow : MonoBehaviour
@@ -7,6 +7,8 @@ public class BattleFlow : MonoBehaviour
     public GameObject gameWinUI;
 
     public PlayerHealth playerHealth;
+    public EnemySpawner enemySpawner;
+
     public GameObject bgMusic;
 
     private bool isGameEnded = false;
@@ -22,29 +24,42 @@ public class BattleFlow : MonoBehaviour
             playerHealth.onDead += GameOver;
     }
 
+    private void Update()
+    {
+        if (isGameEnded) return;
+
+        // nếu không còn enemy thì thắng
+        if (EnemyHealth.LivingEnemyCount <= 0)
+        {
+            Invoke(nameof(OnGameWin), 0.3f);
+        }
+    }
+
+    private System.Collections.IEnumerator WinDelay()
+    {
+        isGameEnded = true;
+
+        yield return new WaitForSeconds(0.3f);
+
+        OnGameWin();
+    }
+
     public void GameOver()
     {
         if (isGameEnded) return;
 
         isGameEnded = true;
+
         gameOverUI.SetActive(true);
+
+        if (bgMusic != null)
+            bgMusic.SetActive(false);
+
         Time.timeScale = 0f;
-    }
-
-    private void Update()
-    {
-        if (isGameEnded) return;
-
-        if (EnemyHealth.LivingEnemyCount == 0)
-        {
-            OnGameWin();
-        }
     }
 
     private void OnGameWin()
     {
-        isGameEnded = true;
-
         gameWinUI.SetActive(true);
 
         if (bgMusic != null)
